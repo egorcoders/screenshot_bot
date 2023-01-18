@@ -68,6 +68,7 @@ coverage.xml
 
 # DB
 *.session
+*.session-journal
 
 # Django stuff:
 *.log
@@ -102,6 +103,11 @@ celerybeat-schedule
 
 # SageMath parsed files
 *.sage.py
+
+# Image Files
+*.jpg
+*.png
+*.jpeg
 
 # Environments
 .env
