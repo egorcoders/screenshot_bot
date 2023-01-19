@@ -2,7 +2,6 @@ import logging
 import logging.config
 import os
 import re
-import time
 from datetime import datetime as dt
 
 import requests
@@ -21,12 +20,14 @@ browser, webpage = None, None
 os.makedirs(os.path.dirname(DIRECTORY_PATH), exist_ok=True)
 
 
-def get_urls(string):
+def get_urls(msg: str) -> list:
+    """Получение списка ссылок из сообщения пользователя."""
     regex = r"(?:(?:https?)?(?:\:\/\/)?)[a-zA-Z0-9\.\/\?@\-_=#]+\.(?:[a-zA-Z]){2,6}(?:[a-zA-Z0-9\.\&\/\?\:@\-_=#%])*"
-    return re.findall(regex, string)
+    return re.findall(regex, msg)
 
 
-def file_name(url):
+def get_file_name(url: str) -> str:
+    """Получение валидного имени для сохраняемого скриншота."""
     u_start = (re.match(r'http(s)?(:)?(\/\/)?(www\.)?', url)).end()
     u_clean = url[u_start:]
     chars = '//\\.'
@@ -56,8 +57,8 @@ async def echo(event):
             logging.info(url)
             await event.respond(f'Статус ответа страницы: {requests.get(url).status_code}')
             await webpage.goto(url)
-            await webpage.screenshot(path=f'{DIRECTORY_PATH}/{file_name(url)}', fullPage=False)
-            await event.reply(file=f'{DIRECTORY_PATH}/{file_name(url)}')
+            await webpage.screenshot(path=f'{DIRECTORY_PATH}/{get_file_name(url)}', fullPage=False)
+            await event.reply(file=f'{DIRECTORY_PATH}/{get_file_name(url)}')
 
 
     except Exception as er:
