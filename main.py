@@ -20,7 +20,7 @@ browser, webpage = None, None
 os.makedirs(os.path.dirname(DIRECTORY_PATH), exist_ok=True)
 
 
-def get_urls(msg: str) -> list:
+def get_urls(msg: str) -> list[str]:
     """Получение списка ссылок из сообщения пользователя."""
     regex = r"(?:(?:https?)?(?:\:\/\/)?)[a-zA-Z0-9\.\/\?@\-_=#]+\.(?:[a-zA-Z]){2,6}(?:[a-zA-Z0-9\.\&\/\?\:@\-_=#%])*"
     return re.findall(regex, msg)
